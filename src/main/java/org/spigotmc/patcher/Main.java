@@ -1,15 +1,16 @@
 package org.spigotmc.patcher;
 
-import com.google.common.hash.Hashing;
-import com.google.common.io.Files;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
+import java.security.MessageDigest;
 import net.md_5.jbeat.Patcher;
 
 public class Main 
@@ -72,8 +73,8 @@ public class Main
         }
 
         System.out.println( "***** Starting patching process, please wait." );
-        System.out.println( "\tInput md5 Checksum: " + Files.hash( originalFile, Hashing.md5() ) );
-        System.out.println( "\tPatch md5 Checksum: " + Files.hash( patchFile, Hashing.md5() ) );
+        System.out.println( "\tInput md5 Checksum: " + getMd5OfFile(originalFile.getAbsolutePath( ) ) );
+        System.out.println( "\tInput md5 Checksum: " + getMd5OfFile(patchFile.getAbsolutePath( ) ) );
 
         try
         {
@@ -89,8 +90,37 @@ public class Main
 
         System.out.println( "Your file has been patched and verified! We hope you enjoy using Spigot!" );
         System.out.println( "Your new patched Spigot is located in the same directory as your patch file!" );
-        System.out.println( "\tOutput md5 Checksum: " + Files.hash( outputFile, Hashing.md5() ) );
+        System.out.println( "\tOutput md5 Checksum: " + getMd5OfFile(outputFile.getAbsolutePath()) );
        
+    }
+    
+    public static String getMd5OfFile(String filePath)
+    {
+        String returnVal = "";
+        try 
+        {
+            InputStream   input   = new FileInputStream(filePath); 
+            byte[]        buffer  = new byte[1024];
+            MessageDigest md5Hash = MessageDigest.getInstance("MD5");
+            int           numRead = 0;
+            while (numRead != -1)
+            {
+                numRead = input.read(buffer);
+                if (numRead > 0)
+                {
+                    md5Hash.update(buffer, 0, numRead);
+                }
+            }
+            input.close();
+
+            byte [] md5Bytes = md5Hash.digest();
+            for (int i=0; i < md5Bytes.length; i++)
+            {
+                returnVal += Integer.toString( ( md5Bytes[i] & 0xff ) + 0x100, 16).substring( 1 );
+            }
+        } 
+        catch(Throwable t) {t.printStackTrace();}
+        return returnVal.toLowerCase();
     }
     
     public static void SystemStream()
