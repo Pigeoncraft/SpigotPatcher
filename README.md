@@ -17,6 +17,7 @@ Download
 --------
 You can grab downloads of current and past versions from our [Jenkins server](http://ci.md-5.net/job/SpigotPatcher/).
 
-TODO
-----
-* Simple and easy to use GUI.
+Added GUI
+
+![alt tag](http://i.gyazo.com/507718263e3d5a3052d51e0c583f8c44.png)
+
