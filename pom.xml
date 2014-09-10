@@ -15,6 +15,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>miglayout</id>
+            <url>http://www.miglayout.com/mavensite/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -33,6 +40,12 @@
             <artifactId>lombok</artifactId>
             <version>1.12.2</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-swing</artifactId>
+            <version>4.2</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -81,7 +94,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>org.spigotmc.patcher.Main</Main-Class> 
+                            <Main-Class>org.spigotmc.patcher.MainWindow</Main-Class> 
                         </manifestEntries>
                     </archive>
                 </configuration>

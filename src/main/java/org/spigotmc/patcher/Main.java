@@ -2,14 +2,39 @@ package org.spigotmc.patcher;
 
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.PrintStream;
 import net.md_5.jbeat.Patcher;
 
-public class Main
+public class Main 
 {
 
     public static void main(String[] args) throws Exception
     {
+        
+        if (args.length == 0)
+        {
+            new MainWindow();
+            
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        SystemStream();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }).start();
+            return;
+        }
+        
         if ( args.length != 3 )
         {
             System.out.println( "Welcome to the Spigot patch applicator." );
@@ -27,17 +52,17 @@ public class Main
 
         if ( !originalFile.canRead() )
         {
-            System.err.println( "Specified original file " + originalFile + " does not exist or cannot be read!" );
+            System.out.println( "Specified original file " + originalFile + " does not exist or cannot be read!" );
             return;
         }
         if ( !patchFile.canRead() )
         {
-            System.err.println( "Specified patch file " + patchFile + " does not exist or cannot be read!!" );
+            System.out.println( "Specified patch file " + patchFile + " does not exist or cannot be read!!" );
             return;
         }
         if ( outputFile.exists() )
         {
-            System.err.println( "Specified output file " + outputFile + " exists, please remove it before running this program!" );
+            System.out.println( "Specified output file " + outputFile + " exists, please remove it before running this program!" );
             return;
         }
         if ( !outputFile.createNewFile() )
@@ -55,13 +80,63 @@ public class Main
             new Patcher( patchFile, originalFile, outputFile ).patch();
         } catch ( Exception ex )
         {
-            System.err.println( "***** Exception occured whilst patching file!" );
+            System.out.println( "Error occured whilst patching file!" );
+            System.out.println( "Please make sure you have build 1649 of Spigot!" );
             ex.printStackTrace();
             outputFile.delete();
             return;
         }
 
-        System.out.println( "***** Your file has been patched and verified! We hope you enjoy using Spigot!" );
+        System.out.println( "Your file has been patched and verified! We hope you enjoy using Spigot!" );
+        System.out.println( "Your new patched Spigot is located in the same directory as your patch file!" );
         System.out.println( "\tOutput md5 Checksum: " + Files.hash( outputFile, Hashing.md5() ) );
+       
+    }
+    
+    public static void SystemStream()
+    {
+        
+        PipedOutputStream pOut = new PipedOutputStream();
+        FileWriter logOut = null;
+        
+        try
+        {
+            PipedInputStream pIn = new PipedInputStream(pOut);
+            @SuppressWarnings("resource")
+            BufferedReader reader = new BufferedReader(new InputStreamReader(pIn));
+            
+            System.setOut(new PrintStream(pOut));
+           //   System.setErr(new PrintStream(pOut));
+            while(true) 
+            {
+                try
+                {
+                    
+                    String line = reader.readLine();
+                    if(line != null) 
+                    {
+                        line = line.trim(); 
+                        if ( line.length() > 0 )
+                        {
+                            MainWindow.textArea.append(line + "\n");
+                            MainWindow.textArea.setCaretPosition(MainWindow.textArea.getDocument().getLength());
+                            
+                            if ( logOut != null )
+                            {
+                                logOut.write( ( line + "\n" ).toCharArray() );
+                                logOut.flush();
+                            }
+                        }
+                    }
+                    
+                } catch (IOException ex) {
+                }
+            }
+        }
+        catch ( IOException e )
+        {
+            e.printStackTrace();
+        }
+            
     }
 }
