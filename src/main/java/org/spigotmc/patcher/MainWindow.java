@@ -28,7 +28,7 @@ public class MainWindow extends JFrame {
     public static JScrollPane areaScrollPane   = new JScrollPane(textArea);
 
     public MainWindow() {
-        setTitle("Spigot Patcher");
+        setTitle("Spigot Patcher v" + Main.version);
         setSize(new Dimension(500, 300));
         setMinimumSize(new Dimension(500, 300));
         setResizable(true);

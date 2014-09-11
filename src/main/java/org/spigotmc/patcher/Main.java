@@ -16,6 +16,8 @@ import net.md_5.jbeat.Patcher;
 
 public class Main 
 {
+    
+    public static String version = "0.03";
 
     public static void main(String[] args) throws Exception
     {
@@ -72,9 +74,9 @@ public class Main
             return;
         }
 
-        System.out.println( "***** Starting patching process, please wait." );
-        System.out.println( "\tInput md5 Checksum: " + getMd5OfFile(originalFile.getAbsolutePath( ) ) );
-        System.out.println( "\tInput md5 Checksum: " + getMd5OfFile(patchFile.getAbsolutePath( ) ) );
+        System.out.println( "Starting patching process, please wait" );
+        System.out.println( "Spigot md5 Checksum: " + getMd5OfFile(originalFile.getAbsolutePath( ) ) );
+        System.out.println( "Patch md5 Checksum: " + getMd5OfFile(patchFile.getAbsolutePath( ) ) );
 
         try
         {
