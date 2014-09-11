@@ -17,7 +17,7 @@ import net.md_5.jbeat.Patcher;
 public class Main 
 {
     
-    public static String version = "0.03";
+    public static String version = "0.04";
 
     public static void main(String[] args) throws Exception
     {

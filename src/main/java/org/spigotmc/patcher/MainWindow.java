@@ -39,15 +39,7 @@ public class MainWindow extends JFrame {
         spigotJarField = new JTextField();
         getContentPane().add(spigotJarField, "cell 1 1,growx");
         spigotJarField.setColumns(10);
-        spigotJarField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                File jarFile = chooseFile("Spigot-1649.jar", new File("."), ".jar", false);
-                if (jarFile != null) {
-                    spigotJarField.setText(jarFile.getPath());
-                }
-            }
-        });
+
         addDragDrop(spigotJarField);
 
         /* BPS patch label/field */
@@ -57,9 +49,28 @@ public class MainWindow extends JFrame {
         patchField = new JTextField();
         getContentPane().add(patchField, "cell 1 3,growx");
         patchField.setColumns(10);
-        patchField.addMouseListener(new MouseAdapter() {
+        
+        /* Browse Spigot button */
+        JButton browseSpigot = new JButton("...");
+        browseSpigot.setFont(font);
+        getContentPane().add(browseSpigot, "cell 1 1");
+        browseSpigot.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
+                File jarFile = chooseFile("Spigot-1649.jar", new File("."), ".jar", false);
+                if (jarFile != null) {
+                    spigotJarField.setText(jarFile.getPath());
+                }
+            }
+        });
+        
+        /* Browse Patch button */
+        JButton browsePatch = new JButton("...");
+        browsePatch.setFont(font);
+        getContentPane().add(browsePatch, "cell 1 3");
+        browsePatch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 File patchFile = chooseFile("BPS patch", new File("."), ".bps", false);
                 if (patchFile != null) {
                     patchField.setText(patchFile.getPath());
@@ -184,7 +195,7 @@ public class MainWindow extends JFrame {
         } catch (Exception ex) {
             // Error
             System.out.println("\tSomething went wrong checking for the latest patch!");
-            System.out.println("\tPlease download it manually from: http://spigotmc.org/spigot-updates/");
+            System.out.println("\tPlease download it manually from:\nhttp://spigotmc.org/spigot-updates/");
         }
         if (allPatches.size() != 0) try {
             System.out.println("\tDownloading latest file [" + allPatches.get(allPatches.size() - 1) + "] ...");
