@@ -9,9 +9,13 @@ See the [initial release announcement](http://www.spigotmc.org/threads/29091/) o
 
 Changelog
 ---------
+* **ver0.02** No longer need lombok or google commons. Now half the file size.
 
-* **1.0.1**: Check file read and write permissions before beginning patch process. 
-* **1.0.0**: Initial Release
+
+* **ver0.03** Added more friendly looking file selection
+
+
+* **ver0.04** Lets use a browse button so people can type out paths if they want.
 
 
 Download
