@@ -20,5 +20,5 @@ You can grab downloads of current and past versions from our [Jenkins server](ht
 
 Added GUI
 
-![alt tag](http://i.gyazo.com/1bb0076194e9863e3e13f691c0df018a.png)
+![alt tag](http://i.gyazo.com/558fee57579173eca313295eb86b8010.png)
 
