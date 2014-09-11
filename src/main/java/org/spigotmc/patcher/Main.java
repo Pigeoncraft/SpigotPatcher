@@ -11,6 +11,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.security.MessageDigest;
+import javax.swing.UIManager;
 import net.md_5.jbeat.Patcher;
 
 public class Main 
@@ -18,11 +19,10 @@ public class Main
 
     public static void main(String[] args) throws Exception
     {
-        
-        if (args.length == 0)
+        if ( args.length == 0 )
         {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName() );
             new MainWindow();
-            
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -47,9 +47,9 @@ public class Main
             return;
         }
 
-        File originalFile = new File( args[0] );
-        File patchFile = new File( args[1] );
-        File outputFile = new File( args[2] );
+        File originalFile   = new File( args[0] );
+        File patchFile      = new File( args[1] );
+        File outputFile     = new File( args[2] );
 
         if ( !originalFile.canRead() )
         {
@@ -94,6 +94,7 @@ public class Main
        
     }
     
+    //Get md5 hash of File
     public static String getMd5OfFile(String filePath)
     {
         String returnVal = "";
@@ -123,6 +124,7 @@ public class Main
         return returnVal.toLowerCase();
     }
     
+    //Steal console output.
     public static void SystemStream()
     {
         
@@ -136,7 +138,7 @@ public class Main
             BufferedReader reader = new BufferedReader(new InputStreamReader(pIn));
             
             System.setOut(new PrintStream(pOut));
-           //   System.setErr(new PrintStream(pOut));
+            System.setErr(new PrintStream(pOut));
             while(true) 
             {
                 try
