@@ -13,16 +13,6 @@ Changelog
 * **1.0.1**: Check file read and write permissions before beginning patch process. 
 * **1.0.0**: Initial Release
 
-Notes
---------
-If you run Main Window instead of Main the consol will not redirect to the Log Text Field.
-
-You must Run Main.java
-
-TODO
---------
-Clean Up
-Have Consol Text Field work when either class is ran.
 
 Download
 --------
@@ -30,5 +20,5 @@ You can grab downloads of current and past versions from our [Jenkins server](ht
 
 Added GUI
 
-![alt tag](http://i.gyazo.com/507718263e3d5a3052d51e0c583f8c44.png)
+![alt tag](http://i.gyazo.com/1bb0076194e9863e3e13f691c0df018a.png)
 
