@@ -82,7 +82,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>org.spigotmc.patcher.MainWindow</Main-Class> 
+                            <Main-Class>org.spigotmc.patcher.Main</Main-Class> 
                         </manifestEntries>
                     </archive>
                 </configuration>

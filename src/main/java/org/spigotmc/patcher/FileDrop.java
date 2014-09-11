@@ -3,6 +3,7 @@ package org.spigotmc.patcher;
 import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
 import java.io.*;
+import java.util.List;
 
 /**
  * This class makes it easy to drag and drop files from the operating system to
@@ -254,7 +255,7 @@ public class FileDrop {
                             evt.acceptDrop(java.awt.dnd.DnDConstants.ACTION_COPY);
                             log(out, "FileDrop: file list accepted.");
                             // Get a useful list
-                            final java.util.List<?> fileList = (java.util.List) tr.getTransferData(java.awt.datatransfer.DataFlavor.javaFileListFlavor);
+                            final java.util.List<?> fileList = (List<?>) tr.getTransferData(java.awt.datatransfer.DataFlavor.javaFileListFlavor);
                             fileList.iterator();
                             // Convert list to array
                             final java.io.File[] filesTemp = new java.io.File[fileList.size()];
@@ -565,6 +566,7 @@ public class FileDrop {
      * @author rob@iharder.net
      * @version 1.2
      */
+    @SuppressWarnings("serial")
     public static class Event extends java.util.EventObject {
         private final java.io.File[] files;
 
@@ -706,7 +708,7 @@ public class FileDrop {
          * @param fetcher The {@link Fetcher} that will return the data object
          * @since 1.1
          */
-        public TransferableObject(final Class dataClass, final Fetcher fetcher) {
+        public TransferableObject(final Class<?> dataClass, final Fetcher fetcher) {
             this.fetcher = fetcher;
             customFlavor = new java.awt.datatransfer.DataFlavor(dataClass, MIME_TYPE);
         } // end constructor
@@ -714,7 +716,7 @@ public class FileDrop {
         /**
          * Returns the custom {@link java.awt.datatransfer.DataFlavor}
          * associated with the encapsulated object or <tt>null</tt> if the
-         * {@link Fetcher} constructor was used without passing a
+         * {@link Fetcher} constructor was used without passing a  
          * {@link java.lang.Class}.
          *
          * @return The custom data flavor for the encapsulated object
