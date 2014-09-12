@@ -11,16 +11,16 @@ Changelog
 ---------
 * **ver0.02** No longer need lombok or google commons. Now half the file size.
 
-
 * **ver0.03** Added more friendly looking file selection
 
-
 * **ver0.04** Lets use a browse button so people can type out paths if they want.
+
+* **ver0.05** Save last Location of Spigot jar if patch is successful.
 
 
 Download
 --------
-You can grab downloads of current and past versions from our [Jenkins server](http://ci.md-5.net/job/SpigotPatcher/).
+You can grab the download for the Latest GUI here: https://dl.dropboxusercontent.com/u/46799139/Spigot%20Patcher.jar
 
 Added GUI
 
