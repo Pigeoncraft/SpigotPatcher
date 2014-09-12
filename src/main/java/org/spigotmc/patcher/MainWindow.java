@@ -21,18 +21,23 @@ public class MainWindow extends JFrame {
      * 
      */
     private static final long serialVersionUID = -1715357374780770994L;
-    private static final Font font             = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-    public static JTextField        spigotJarField;
-    public static JTextField        patchField;
-    public static JTextArea   textArea         = new JTextArea("");
-    public static JScrollPane areaScrollPane   = new JScrollPane(textArea);
+    private Font font             = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+    public JTextField        spigotJarField;
+    public JTextField        patchField;
+    public JTextArea         textArea          = new JTextArea("");
+    public JScrollPane       areaScrollPane    = new JScrollPane(textArea);
+    Main main;
 
-    public MainWindow() {
-        setTitle("Spigot Patcher v" + Main.version);
+    public MainWindow(Main main) {
+        this.main = main;
+        
+        setTitle("Spigot Patcher v" + main.version);
         setSize(new Dimension(500, 300));
         setMinimumSize(new Dimension(500, 300));
         setResizable(true);
         getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][30.00][][][][][][-61.00][-16.00]"));
+        
+        /* Spigot jar label/field */
         JLabel label1 = new JLabel("  Original jar: ");
         label1.setFont(font);
         getContentPane().add(label1, "cell 0 0 2 1,alignx center");
@@ -125,8 +130,9 @@ public class MainWindow extends JFrame {
 
         areaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         areaScrollPane.setPreferredSize(new Dimension(350, 600));
-        textArea.setEditable(false);
+        textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
+        textArea.setEditable(false);
 
         getContentPane().add(areaScrollPane, "cell 1 6,growx");
 

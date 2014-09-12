@@ -3,7 +3,6 @@ package org.spigotmc.patcher;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,31 +19,36 @@ import net.md_5.jbeat.Patcher;
 
 public class Main 
 {
-    public static String version = "0.05";
-    public static Properties props;
-    public static String spigotLocation; 
+    public String version = "0.05";
+    private Properties props;
+    private String spigotLocation; 
+    private MainWindow gui;
     
+    
+    public void startGui(){
+        gui = new MainWindow(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SystemStream();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }).start();
+        loadProperties();
+        gui.spigotJarField.setText(spigotLocation);
+        
+    }
     
     public static void main(String[] args) throws Exception
     {
-        
-        
         if ( args.length == 0 )
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName() );
-            new MainWindow();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        SystemStream();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }).start();
-            loadProperties();
-            MainWindow.spigotJarField.setText(spigotLocation);
+            Main main = new Main();
+            main.startGui();
             return;
         }
         
@@ -86,7 +90,7 @@ public class Main
 
         System.out.println( "Starting patching process, please wait" );
         System.out.println( "Spigot md5 Checksum: " + getMd5OfFile(originalFile.getAbsolutePath( ) ) );
-        System.out.println( "Patch md5 Checksum: " + getMd5OfFile(patchFile.getAbsolutePath( ) ) );
+        System.out.println( "Patch md5 Checksum : " + getMd5OfFile(patchFile.getAbsolutePath( ) ) );
 
         try
         {
@@ -100,9 +104,10 @@ public class Main
             return;
         }
 
-        System.out.println( "Your file has been patched and verified! We hope you enjoy using Spigot!" );
-        System.out.println( "Your new patched Spigot is located in the same directory as your patch file!" );
         System.out.println( "\tOutput md5 Checksum: " + getMd5OfFile(outputFile.getAbsolutePath()) );
+        System.out.println( "Your new patched Spigot is located in the same directory as your patch file!" );
+        System.out.println( "Your file has been patched and verified! Enjoy!" );
+        
        
     }
     
@@ -136,7 +141,7 @@ public class Main
         return returnVal.toLowerCase();
     }
     
-    public static void loadProperties() {
+    public void loadProperties() {
         props = new Properties();
         InputStream is = null;
         File f = null;
@@ -192,7 +197,7 @@ public class Main
     }
     
     //Steal console output.
-    public static void SystemStream()
+    public void SystemStream()
     {
         
         PipedOutputStream pOut = new PipedOutputStream();
@@ -217,8 +222,8 @@ public class Main
                         line = line.trim(); 
                         if ( line.length() > 0 )
                         {
-                            MainWindow.textArea.append(line + "\n");
-                            MainWindow.textArea.setCaretPosition(MainWindow.textArea.getDocument().getLength());
+                            gui.textArea.append(line + "\n");
+                            gui.textArea.setCaretPosition(gui.textArea.getDocument().getLength());
                             
                             if ( logOut != null )
                             {
