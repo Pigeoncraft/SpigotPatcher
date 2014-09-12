@@ -22,8 +22,8 @@ public class MainWindow extends JFrame {
      */
     private static final long serialVersionUID = -1715357374780770994L;
     private static final Font font             = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-    private JTextField        spigotJarField;
-    private JTextField        patchField;
+    public static JTextField        spigotJarField;
+    public static JTextField        patchField;
     public static JTextArea   textArea         = new JTextArea("");
     public static JScrollPane areaScrollPane   = new JScrollPane(textArea);
 
@@ -50,7 +50,7 @@ public class MainWindow extends JFrame {
         getContentPane().add(patchField, "cell 1 3,growx");
         patchField.setColumns(10);
         
-        /* Browse Spigot button */
+        /* Browse Spigot button Only want .jar Files*/
         JButton browseSpigot = new JButton("...");
         browseSpigot.setFont(font);
         getContentPane().add(browseSpigot, "cell 1 1");
@@ -64,7 +64,7 @@ public class MainWindow extends JFrame {
             }
         });
         
-        /* Browse Patch button */
+        /* Browse Patch button Only want .bps Files*/
         JButton browsePatch = new JButton("...");
         browsePatch.setFont(font);
         getContentPane().add(browsePatch, "cell 1 3");
@@ -114,7 +114,7 @@ public class MainWindow extends JFrame {
                     public void run() {
                         try {
                             Main.main(new String[] { originalFile, patchFile, outputFile });
-
+                            Main.saveParamChanges("LastSpigotLocation", originalFile);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -221,7 +221,7 @@ public class MainWindow extends JFrame {
         } catch (Exception ex) {
             // Error
             System.out.println("\tSomething went wrong downloading the latest patch!");
-            System.out.println("\tPlease download it manually from: http://spigotmc.org/spigot-updates/");
+            System.out.println("\tPlease download it manually from:http://spigotmc.org/spigot-updates/");
         }
         return null;
     }

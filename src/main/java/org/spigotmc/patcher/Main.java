@@ -3,24 +3,32 @@ package org.spigotmc.patcher;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.security.MessageDigest;
+import java.util.Properties;
 import javax.swing.UIManager;
 import net.md_5.jbeat.Patcher;
 
 public class Main 
 {
+    public static String version = "0.05";
+    public static Properties props;
+    public static String spigotLocation; 
     
-    public static String version = "0.04";
-
+    
     public static void main(String[] args) throws Exception
     {
+        
+        
         if ( args.length == 0 )
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName() );
@@ -35,6 +43,8 @@ public class Main
                     }
                 }
             }).start();
+            loadProperties();
+            MainWindow.spigotJarField.setText(spigotLocation);
             return;
         }
         
@@ -42,7 +52,7 @@ public class Main
         {
             System.out.println( "Welcome to the Spigot patch applicator." );
             System.out.println( "In order to use this tool you will need to specify three command line arguments as follows:" );
-            System.out.println( "\tjava -jar SpigotPatcher.jar original.jar patch.bps output.jar" );
+            System.out.println( "java -jar SpigotPatcher.jar original.jar patch.bps output.jar" );
             System.out.println( "This will apply the specified patch to the original jar and save it to the output jar" );
             System.out.println( "Please ensure that you save your original jar for later use." );
             System.out.println( "If you have any queries, please direct them to http://www.spigotmc.org/" );
@@ -124,6 +134,61 @@ public class Main
         } 
         catch(Throwable t) {t.printStackTrace();}
         return returnVal.toLowerCase();
+    }
+    
+    public static void loadProperties() {
+        props = new Properties();
+        InputStream is = null;
+        File f = null;
+        try {
+            f = new File(getHomeDirectory() + "\\Patcher.properties");
+            if (!f.exists()){
+                f.createNewFile();
+            }
+            is = new FileInputStream( f );
+        }
+        catch ( Exception e ) { 
+            e.printStackTrace();
+        }
+        
+     
+        try {
+            props.load( is );
+        }
+        catch ( Exception e ) {
+            System.err.println( "Error Loading Properties File" );
+        }
+        
+        spigotLocation = props.getProperty("LastSpigotLocation", "");
+    }
+    
+    public static void saveParamChanges(String Key, String Value) {
+        try {
+            Properties props = new Properties();
+            props.setProperty(Key, Value);
+            File f = new File(getHomeDirectory() + "\\Patcher.properties");
+            OutputStream out = new FileOutputStream( f );
+            props.store(out, "This is an optional header comment string");
+        }
+        catch (Exception e ) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Getting Home Directory
+    public static File getHomeDirectory() {
+        String userHome = System.getProperty("user.home");
+        if(userHome == null) {
+            throw new IllegalStateException("user.home==null");
+        }
+        File home = new File(userHome);
+        File settingsDirectory = new File(home, ".myappdir");
+        if(!settingsDirectory.exists()) {
+            if(!settingsDirectory.mkdir()) {
+                throw new IllegalStateException(settingsDirectory.toString());
+            }
+        }
+        return settingsDirectory;
     }
     
     //Steal console output.
