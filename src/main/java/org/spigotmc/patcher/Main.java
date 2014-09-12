@@ -69,22 +69,22 @@ public class Main
 
         if ( !originalFile.canRead() )
         {
-            System.out.println( "Specified original file " + originalFile + " does not exist or cannot be read!" );
+            System.err.println( "Specified original file " + originalFile + " does not exist or cannot be read!" );
             return;
         }
         if ( !patchFile.canRead() )
         {
-            System.out.println( "Specified patch file " + patchFile + " does not exist or cannot be read!!" );
+            System.err.println( "Specified patch file " + patchFile + " does not exist or cannot be read!!" );
             return;
         }
         if ( outputFile.exists() )
         {
-            System.out.println( "Specified output file " + outputFile + " exists, please remove it before running this program!" );
+            System.err.println( "Specified output file " + outputFile + " exists, please remove it before running this program!" );
             return;
         }
         if ( !outputFile.createNewFile() )
         {
-            System.out.println( "Could not create specified output file " + outputFile + " please ensure that it is in a valid directory which can be written to." );
+            System.err.println( "Could not create specified output file " + outputFile + " please ensure that it is in a valid directory which can be written to." );
             return;
         }
 
@@ -97,8 +97,8 @@ public class Main
             new Patcher( patchFile, originalFile, outputFile ).patch();
         } catch ( Exception ex )
         {
-            System.out.println( "Error occured whilst patching file!" );
-            System.out.println( "Please make sure you have build 1649 of Spigot!" );
+            System.err.println( "Error occured whilst patching file!" );
+            System.err.println( "Please make sure you have build 1649 of Spigot!" );
             ex.printStackTrace();
             outputFile.delete();
             return;

@@ -133,7 +133,7 @@ public class MainWindow extends JFrame {
         textArea.setLineWrap(true);
         textArea.setEditable(false);
 
-        getContentPane().add(areaScrollPane, "cell 1 6, growx, span, pushy, growy");
+        getContentPane().add(areaScrollPane, "cell 1 5, growx, span, pushy, growy");
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
