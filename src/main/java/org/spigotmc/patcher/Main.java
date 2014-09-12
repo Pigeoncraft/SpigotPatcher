@@ -90,7 +90,7 @@ public class Main
 
         System.out.println( "Starting patching process, please wait" );
         System.out.println( "Spigot md5 Checksum: " + getMd5OfFile(originalFile.getAbsolutePath( ) ) );
-        System.out.println( "Patch md5 Checksum : " + getMd5OfFile(patchFile.getAbsolutePath( ) ) );
+        System.out.println( "Patch  md5 Checksum: " + getMd5OfFile(patchFile.getAbsolutePath( ) ) );
 
         try
         {

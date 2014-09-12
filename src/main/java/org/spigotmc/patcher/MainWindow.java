@@ -35,7 +35,7 @@ public class MainWindow extends JFrame {
         setSize(new Dimension(500, 300));
         setMinimumSize(new Dimension(500, 300));
         setResizable(true);
-        getContentPane().setLayout(new MigLayout("", "[][grow]", "[][][][][30.00][][][][][][-61.00][-16.00]"));
+        getContentPane().setLayout(new MigLayout("", "[][grow][]", "[][][][][30.00][][][][][][-61.00][-16.00]"));
         
         /* Spigot jar label/field */
         JLabel label1 = new JLabel("  Original jar: ");
@@ -86,7 +86,7 @@ public class MainWindow extends JFrame {
         /* Download Patch button */
         JButton dnlPatch = new JButton("Download Latest Patch");
         dnlPatch.setFont(font);
-        getContentPane().add(dnlPatch, "cell 1 5,growx");
+        getContentPane().add(dnlPatch, "cell 1 4,growx");
         dnlPatch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,7 +107,7 @@ public class MainWindow extends JFrame {
         /* Patch button */
         JButton btnPatch = new JButton("Patch!");
         btnPatch.setFont(font);
-        getContentPane().add(btnPatch, "cell 1 5,growx");
+        getContentPane().add(btnPatch, "cell 1 4,growx");
         btnPatch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,12 +129,11 @@ public class MainWindow extends JFrame {
         });
 
         areaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        areaScrollPane.setPreferredSize(new Dimension(350, 600));
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
 
-        getContentPane().add(areaScrollPane, "cell 1 6,growx");
+        getContentPane().add(areaScrollPane, "cell 1 6, growx, span, pushy, growy");
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
